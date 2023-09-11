@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "ts-node-dev index.tsx",
-    "build": "rimraf dist && tsc",
-    "deploy": "npm run build && vercel --prod"
+    "start": "ts-node-dev index.tsx"
   },
   "author": "",
   "license": "ISC",
