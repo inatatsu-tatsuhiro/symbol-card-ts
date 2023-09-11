@@ -4,11 +4,13 @@
   "description": "",
   "scripts": {
     "start": "ts-node-dev index.tsx",
-    "deploy": "node dist/index.js"
+    "build": "rimraf dist && tsc",
+    "deploy": "npm run build && vercel --prod"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "rimraf": "^5.0.1",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
