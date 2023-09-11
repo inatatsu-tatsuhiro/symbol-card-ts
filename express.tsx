@@ -4,7 +4,7 @@ import fs from 'fs'
 import React from 'react'
 import express from 'express'
 
-const roboto = fs.readFileSync('fonts/Roboto.ttf')
+const roboto = fs.readFileSync('./fonts/Roboto.ttf')
 
 const app = express()
 
