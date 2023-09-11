@@ -99,4 +99,9 @@ app.get('/image', async (req, res) => {
   res.send(pngBuffer)
 })
 
-app.listen(4000)
+app.listen({ port: 3000 }, () => {
+  console.log(`Server ready at http://localhost:3000`)
+})
+console.log('starts')
+
+export default app
