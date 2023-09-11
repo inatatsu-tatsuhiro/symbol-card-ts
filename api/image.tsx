@@ -6,7 +6,7 @@ import React from 'react'
 import path from 'path'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const fontPath = path.join(process.cwd(), 'fonts', 'Roboto.ttf')
+  const fontPath = path.join(process.cwd(), 'api', 'fonts', 'Roboto.ttf')
   const roboto = fs.readFileSync(fontPath)
   const width = 800
   const height = 256
