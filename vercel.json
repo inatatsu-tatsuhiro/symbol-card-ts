@@ -1,6 +1,6 @@
 {
   "functions": {
-    "index.tsx": {
+    "api/index.tsx": {
       "memory": 1024
     }
   }
