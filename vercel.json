@@ -2,6 +2,9 @@
   "functions": {
     "api/index.tsx": {
       "memory": 1024
+    },
+    "api/image.tsx": {
+      "memory": 1024
     }
   }
 }
