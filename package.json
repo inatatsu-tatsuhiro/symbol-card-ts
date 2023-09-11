@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "ts-node-dev index.tsx"
+    "start": "ts-node-dev express.tsx"
   },
   "author": "",
   "license": "ISC",

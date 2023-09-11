@@ -3,23 +3,25 @@ import satori from 'satori'
 import sharp from 'sharp'
 import fs from 'fs'
 import React from 'react'
-
-const roboto = fs.readFileSync('fonts/Roboto.ttf')
-const width = 800
-const height = 256
-
-const option = {
-  width,
-  height,
-  fonts: [
-    {
-      name: 'Roboto',
-      data: roboto
-    }
-  ]
-}
+import path from 'path'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  const fontPath = path.join(process.cwd(), 'fonts', 'Roboto.ttf')
+  const roboto = fs.readFileSync(fontPath)
+  const width = 800
+  const height = 256
+
+  const option = {
+    width,
+    height,
+    fonts: [
+      {
+        name: 'Roboto',
+        data: roboto
+      }
+    ]
+  }
+
   const s = {
     root: {
       width: '100%',
