@@ -65,8 +65,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
   }
 
-  const address = 'NAW7L44MVKCVBM6IGEBXLF2K7JYKEP6R5XMCEZA'
-  const mosaicId = '4EB65C4005959604'
+  const address = req.query.address
+  const mosaicId = req.query.ticketId
   const no = 'No. 1'
 
   const body = (
@@ -90,6 +90,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const svg = await satori(body, option)
 
   const pngBuffer = await sharp(Buffer.from(svg)).png().toBuffer()
+
   res.setHeader('Content-Type', 'image/png')
+  res.setHeader('Cache-Control', 'max-age=30')
+
   res.end(pngBuffer)
 }
