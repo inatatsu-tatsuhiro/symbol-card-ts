@@ -3,6 +3,18 @@ import sharp from 'sharp'
 import fs from 'fs'
 import React from 'react'
 import express from 'express'
+import {
+  Address,
+  AggregateTransaction,
+  MosaicId,
+  NetworkType,
+  PublicAccount,
+  RepositoryFactoryHttp,
+  TransactionGroup,
+  TransactionSearchCriteria,
+  TransactionType,
+  TransferTransaction
+} from 'symbol-sdk'
 
 const roboto = fs.readFileSync('./fonts/Roboto.ttf')
 
@@ -70,9 +82,30 @@ app.get('/image', async (req, res) => {
     }
   }
 
-  const address = 'NAW7L44MVKCVBM6IGEBXLF2K7JYKEP6R5XMCEZA'
-  const mosaicId = '4EB65C4005959604'
-  const no = 'No. 1'
+  const master = PublicAccount.createFromPublicKey(
+    '9703DAE047A9162CD768130F85DEACA8A50B984BB64BCDE7DB9B781825953BA0',
+    NetworkType.TEST_NET
+  )
+
+  const nodeUrl = 'https://sym-test-03.opening-line.jp:3001'
+  const repoFac = new RepositoryFactoryHttp(nodeUrl)
+  const txRepo = repoFac.createTransactionRepository()
+
+  const address = 'TCKAT7MEF3MOMXR52OOOYLTGE6JCX6KJFH4375A'
+  const mosaicId = '421A6EC7B6865BFB'
+
+  const criteria: TransactionSearchCriteria = {
+    group: TransactionGroup.Confirmed,
+    signerPublicKey: master.publicKey,
+    recipientAddress: Address.createFromRawAddress(address),
+    embedded: true,
+    type: [TransactionType.TRANSFER]
+  }
+  const data = await txRepo.search(criteria).toPromise()
+
+  const tx = data?.data[0] as TransferTransaction
+  console.log(tx)
+  const no = tx.message.payload
 
   const body = (
     <div style={s.root}>

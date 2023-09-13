@@ -4,6 +4,20 @@ import sharp from 'sharp'
 import fs from 'fs'
 import React from 'react'
 import path from 'path'
+import {
+  Address,
+  RepositoryFactoryHttp,
+  TransactionGroup,
+  TransactionSearchCriteria,
+  TransactionType,
+  TransferTransaction
+} from 'symbol-sdk'
+
+const publicKey =
+  '9703DAE047A9162CD768130F85DEACA8A50B984BB64BCDE7DB9B781825953BA0'
+const nodeUrl = 'https://sym-test-03.opening-line.jp:3001'
+const repoFac = new RepositoryFactoryHttp(nodeUrl)
+const txRepo = repoFac.createTransactionRepository()
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const fontPath = path.join(process.cwd(), 'api', 'fonts', 'Roboto.ttf')
@@ -65,9 +79,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
   }
 
-  const address = req.query.address
-  const mosaicId = req.query.ticketId
-  const no = 'No. 1'
+  const address = req.query.address as string
+  const mosaicId = req.query.ticketId as string
+
+  const criteria: TransactionSearchCriteria = {
+    group: TransactionGroup.Confirmed,
+    signerPublicKey: publicKey,
+    recipientAddress: Address.createFromRawAddress(address),
+    embedded: true,
+    type: [TransactionType.TRANSFER]
+  }
+  const data = await txRepo.search(criteria).toPromise()
+
+  const tx = data?.data[0] as TransferTransaction
+  console.log(tx)
+  const no = tx.message.payload
 
   const body = (
     <div style={s.root}>
